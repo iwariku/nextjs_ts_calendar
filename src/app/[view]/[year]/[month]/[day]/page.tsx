@@ -61,21 +61,35 @@ const Page = async ({ params }: PageProps) => {
   //   [],
   // );
 
+  // clientで使う関数
+  const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">
-        {view === 'month' ? '月表示' : '週表示'}: {year}年{month}月
-      </h1>
+    <div className="max-w-4xl mx-auto border shadow-lg">
+      {/* 1. 曜日のヘッダー行 */}
+      <div className="grid grid-cols-7 border-b bg-yellow-200">
+        {daysOfWeek.map((d) => (
+          <div key={d} className="border-b border-r p-2 text-center font-bold">
+            {d}
+          </div>
+        ))}
+      </div>
 
-      <p className="mb-2">カレンダーのマス目数: {calendarDays.length}</p>
-
-      <ul className="list-disc ml-5 bg-amber-200">
-        <li>開始日: {format(calendarDays[0], 'yyyy/MM/dd (E)')}</li>
-        <li>
-          終了日:{' '}
-          {format(calendarDays[calendarDays.length - 1], 'yyyy/MM/dd (E)')}
-        </li>
-      </ul>
+      {/* 2. カレンダーの日付部分 */}
+      <div className="grid grid-cols-7">
+        {calendarMatrix.map((week, weekIndex) => (
+          <React.Fragment key={weekIndex}>
+            {week.map((day, dayIndex) => (
+              <div
+                key={dayIndex}
+                className="border-b border-r p-2 h-24 text-right"
+              >
+                {format(day, 'd')}
+              </div>
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
