@@ -1,5 +1,6 @@
+import CalendarDay from '@/components/CalendarDay';
 import { getCalendarData } from '@/utils/calendar';
-import { format } from 'date-fns';
+import { format, isToday } from 'date-fns';
 import React from 'react';
 
 type PageProps = {
@@ -30,18 +31,12 @@ const Page = async ({ params }: PageProps) => {
           </div>
         ))}
       </div>
-
       {/* 2. カレンダーの日付部分 */}
       <div className="grid grid-cols-7">
         {calendarMatrix.map((week, weekIndex) => (
           <React.Fragment key={weekIndex}>
-            {week.map((day, dayIndex) => (
-              <div
-                key={dayIndex}
-                className="border-b border-r p-2 h-24 text-right"
-              >
-                {format(day, 'd')}
-              </div>
+            {week.map((date, dayIndex) => (
+              <CalendarDay key={dayIndex} date={date} />
             ))}
           </React.Fragment>
         ))}
