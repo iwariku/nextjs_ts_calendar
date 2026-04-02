@@ -1,5 +1,9 @@
 import CalendarDay from '@/components/CalendarDay';
-import { getCalendarData, getNavigationPaths } from '@/utils/calendar';
+import {
+  getCalendarData,
+  getNavigationPaths,
+  getWeekData,
+} from '@/utils/calendar';
 import Link from 'next/link';
 import React from 'react';
 
@@ -17,9 +21,17 @@ const Page = async ({ params }: PageProps) => {
   // 1. パラメータを取り出す
   const { view, year, month, day } = await params;
 
-  const { calendarMatrix } = getCalendarData(year, month, day);
+  // viewによって呼ぶ関数を変える
+  const { calendarMatrix } =
+    view === 'month'
+      ? getCalendarData(year, month, day)
+      : getWeekData(year, month, day);
+
+  // const { calendarMatrix } = getCalendarData(year, month, day);
 
   const { prevPath, nextPath } = getNavigationPaths(year, month);
+
+  // const { calendarWeek } = getWeekData(year, month, day);
 
   const DAYS_OF_WEEK = ['日', '月', '火', '水', '木', '金', '土'];
   return (
@@ -52,13 +64,26 @@ const Page = async ({ params }: PageProps) => {
         </div>
         {/* 2. カレンダーの日付部分 */}
         <div className="grid grid-cols-7">
-          {calendarMatrix.map((week, weekIndex) => (
-            <React.Fragment key={weekIndex}>
-              {week.map((date, dayIndex) => (
-                <CalendarDay key={dayIndex} date={date} />
+          {view === 'month'
+            ? // 今までの月表示ロジック
+              calendarMatrix.map((week, weekIndex) => (
+                <React.Fragment key={weekIndex}>
+                  {week.map((date, dayIndex) => (
+                    <CalendarDay key={dayIndex} date={date} />
+                  ))}
+                </React.Fragment>
+              ))
+            : // ★週表示（1重ループ）
+              // 2次元配列の 0番目（今週分）を取り出して map で回す
+              calendarMatrix[0].map((date, dayIndex) => (
+                <div
+                  key={dayIndex}
+                  className="min-h-[400px] border-r p-2 bg-gray-50"
+                >
+                  <CalendarDay date={date} />
+                  {/* ここに将来的に時間軸の枠などを入れるイメージ */}
+                </div>
               ))}
-            </React.Fragment>
-          ))}
         </div>
       </div>
     </>
