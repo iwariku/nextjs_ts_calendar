@@ -2,6 +2,7 @@ import CalendarDay from '@/components/CalendarDay';
 import {
   getCalendarData,
   getNavigationPaths,
+  getNavigationWeek,
   getWeekData,
 } from '@/utils/calendar';
 import Link from 'next/link';
@@ -29,7 +30,8 @@ const Page = async ({ params }: PageProps) => {
 
   // const { calendarMatrix } = getCalendarData(year, month, day);
 
-  const { prevPath, nextPath } = getNavigationPaths(year, month);
+  // const { prevPath, nextPath } = getNavigationPaths(year, month);
+  const { prevPath, nextPath } = getNavigationWeek(year, month, day);
 
   // const { calendarWeek } = getWeekData(year, month, day);
 

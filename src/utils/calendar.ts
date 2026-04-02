@@ -1,5 +1,6 @@
 import {
   addMonths,
+  addWeeks,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -89,4 +90,37 @@ export const getWeekData = (
   const calendarWeek = eachDayOfInterval({ start, end });
 
   return { calendarMatrix: [calendarWeek] };
+};
+
+export const getNavigationWeek = (
+  yearStr: string,
+  monthStr: string,
+  dayStr: string,
+) => {
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  // --- 1. 現在表示している日の Date オブジェクトを作る ---
+  // year, month, day は string なので、Date に変換する必要があります
+  const currentDate = new Date(year, month - 1, day);
+
+  // --- 2. 先週と翌週を計算する ---
+  const prevWeek = addWeeks(currentDate, -1);
+  const nextWeek = addWeeks(currentDate, 1);
+
+  // --- 移動した先の週の始めを受け取る(日曜日の日) ---
+  const prevWeekStart = startOfWeek(prevWeek);
+  const nextWeekStart = startOfWeek(nextWeek);
+
+  const prevWeekPart = format(prevWeekStart, 'yyyy/MM/dd');
+  const nextWeekPart = format(nextWeekStart, 'yyyy/MM/dd');
+
+  const prevPath = `/week/${prevWeekPart}`;
+  const nextPath = `/week/${nextWeekPart}`;
+
+  return {
+    prevPath,
+    nextPath,
+  };
 };
