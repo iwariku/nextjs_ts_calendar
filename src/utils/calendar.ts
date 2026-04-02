@@ -71,3 +71,22 @@ export const getNavigationPaths = (yearStr: string, monthStr: string) => {
     nextPath,
   };
 };
+
+export const getWeekData = (
+  yearStr: string,
+  monthStr: string,
+  dayStr: string,
+): CalendarData => {
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  const targetDate = new Date(year, month - 1, day);
+
+  const start = startOfWeek(targetDate);
+  const end = endOfWeek(targetDate);
+
+  const calendarWeek = eachDayOfInterval({ start, end });
+
+  return { calendarMatrix: [calendarWeek] };
+};
