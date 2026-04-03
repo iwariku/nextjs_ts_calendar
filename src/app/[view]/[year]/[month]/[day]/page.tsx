@@ -52,6 +52,21 @@ const Page = async ({ params }: PageProps) => {
         </h2>
       </div>
 
+      <div className="flex border rounded-md p-1 bg-gray-50">
+        <Link
+          href={`/month/${year}/${month}/${day}`}
+          className="px-4 py-1 hover:bg-white hover:shadow-sm rounded-md transition-all"
+        >
+          月
+        </Link>
+        <Link
+          href={`/week/${year}/${month}/${day}`}
+          className="px-4 py-1 hover:bg-white hover:shadow-sm rounded-md transition-all"
+        >
+          週
+        </Link>
+      </div>
+
       <div className="max-w-4xl mx-auto border shadow-lg">
         {/* 1. 曜日のヘッダー行 */}
         <div className="grid grid-cols-7 border-b bg-yellow-200">
