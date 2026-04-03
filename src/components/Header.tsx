@@ -1,22 +1,14 @@
+import { CalendarParams } from '@/utils/calendar';
 import Link from 'next/link';
 
 type PropsType = {
   prevPath: string;
   nextPath: string;
-  year: string;
-  month: string;
-  day: string;
-  view: string;
+  params: CalendarParams;
 };
 
-export const Header = ({
-  prevPath,
-  nextPath,
-  year,
-  month,
-  day,
-  view,
-}: PropsType) => {
+export const Header = ({ prevPath, nextPath, params }: PropsType) => {
+  const { year, month, day, view } = params;
   return (
     <>
       <div className="max-w-4xl mx-auto flex items-center justify-between p-4 bg-white border-b">

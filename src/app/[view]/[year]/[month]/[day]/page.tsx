@@ -19,31 +19,23 @@ type PageProps = {
   }>;
 };
 
-const Page = async ({ params }: PageProps) => {
+const CalendarPage = async ({ params }: PageProps) => {
   // 1. パラメータを取り出す
-  const { view, year, month, day } = await params;
+  const dateParams = await params;
+  const { view } = dateParams;
 
   // viewによって呼ぶ関数を変える
   const { calendarMatrix } =
-    view === 'month'
-      ? getCalendarData(year, month, day)
-      : getWeekData(year, month, day);
+    view === 'month' ? getCalendarData(dateParams) : getWeekData(dateParams);
 
   const { prevPath, nextPath } =
     view === 'month'
-      ? getNavigationPaths(year, month)
-      : getNavigationWeek(year, month, day);
+      ? getNavigationPaths(dateParams)
+      : getNavigationWeek(dateParams);
 
   return (
     <>
-      <Header
-        prevPath={prevPath}
-        nextPath={nextPath}
-        year={year}
-        month={month}
-        day={day}
-        view={view}
-      />
+      <Header prevPath={prevPath} nextPath={nextPath} params={dateParams} />
 
       <div className="max-w-4xl mx-auto border shadow-lg">
         <WeekHeader />
@@ -62,4 +54,4 @@ const Page = async ({ params }: PageProps) => {
   );
 };
 
-export default Page;
+export default CalendarPage;
