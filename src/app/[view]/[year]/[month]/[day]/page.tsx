@@ -28,12 +28,10 @@ const Page = async ({ params }: PageProps) => {
       ? getCalendarData(year, month, day)
       : getWeekData(year, month, day);
 
-  // const { calendarMatrix } = getCalendarData(year, month, day);
-
-  // const { prevPath, nextPath } = getNavigationPaths(year, month);
-  const { prevPath, nextPath } = getNavigationWeek(year, month, day);
-
-  // const { calendarWeek } = getWeekData(year, month, day);
+  const { prevPath, nextPath } =
+    view === 'month'
+      ? getNavigationPaths(year, month)
+      : getNavigationWeek(year, month, day);
 
   const DAYS_OF_WEEK = ['日', '月', '火', '水', '木', '金', '土'];
   return (
