@@ -1,6 +1,13 @@
-import CalendarDay from '@/components/CalendarDay';
-import { getCalendarData, getNavigationPaths } from '@/utils/calendar';
-import Link from 'next/link';
+import { Header } from '@/components/Header';
+import { MonthView } from '@/components/MonthView';
+import { WeekHeader } from '@/components/WeekHeader';
+import { WeekView } from '@/components/WeekView';
+import {
+  getCalendarData,
+  getNavigationPaths,
+  getNavigationWeek,
+  getWeekData,
+} from '@/utils/calendar';
 import React from 'react';
 
 type PageProps = {
@@ -12,57 +19,39 @@ type PageProps = {
   }>;
 };
 
-const Page = async ({ params }: PageProps) => {
-  // --- 日にち取得ロジック ---
+const CalendarPage = async ({ params }: PageProps) => {
   // 1. パラメータを取り出す
-  const { view, year, month, day } = await params;
+  const dateParams = await params;
+  const { view } = dateParams;
 
-  const { calendarMatrix } = getCalendarData(year, month, day);
+  // viewによって呼ぶ関数を変える
+  const { calendarMatrix } =
+    view === 'month' ? getCalendarData(dateParams) : getWeekData(dateParams);
 
-  const { prevPath, nextPath } = getNavigationPaths(year, month);
+  const { prevPath, nextPath } =
+    view === 'month'
+      ? getNavigationPaths(dateParams)
+      : getNavigationWeek(dateParams);
 
-  const DAYS_OF_WEEK = ['日', '月', '火', '水', '木', '金', '土'];
   return (
     <>
-      <div className="max-w-4xl mx-auto flex items-center gap-4 p-4 bg-white">
-        <div className="flex items-center">
-          <Link href={prevPath} className="p-2 hover:bg-gray-100 rounded-full">
-            ＜
-          </Link>
-          <Link href={nextPath} className="p-2 hover:bg-gray-100 rounded-full">
-            ＞
-          </Link>
-        </div>
-        <h2 className="text-xl font-semibold">
-          {year}年{month}月
-        </h2>
-      </div>
+      <Header prevPath={prevPath} nextPath={nextPath} params={dateParams} />
 
       <div className="max-w-4xl mx-auto border shadow-lg">
-        {/* 1. 曜日のヘッダー行 */}
-        <div className="grid grid-cols-7 border-b bg-yellow-200">
-          {DAYS_OF_WEEK.map((d) => (
-            <div
-              key={d}
-              className="border-b border-r p-2 text-center font-bold"
-            >
-              {d}
-            </div>
-          ))}
-        </div>
+        <WeekHeader />
+
         {/* 2. カレンダーの日付部分 */}
         <div className="grid grid-cols-7">
-          {calendarMatrix.map((week, weekIndex) => (
-            <React.Fragment key={weekIndex}>
-              {week.map((date, dayIndex) => (
-                <CalendarDay key={dayIndex} date={date} />
-              ))}
-            </React.Fragment>
-          ))}
+          {view === 'month' ? (
+            <MonthView matrix={calendarMatrix} />
+          ) : (
+            // calendarMatrix[0]はパスから受け取った日を含む1週間を示す
+            <WeekView weekDays={calendarMatrix[0]} />
+          )}
         </div>
       </div>
     </>
   );
 };
 
-export default Page;
+export default CalendarPage;
