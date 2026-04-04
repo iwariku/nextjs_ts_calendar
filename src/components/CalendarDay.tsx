@@ -1,11 +1,19 @@
 import { format, isToday } from 'date-fns';
 import React from 'react';
 
-const CalendarDay = ({ date }: { date: Date }) => {
+type PropsType = {
+  date: Date;
+  onDayClick: (date: Date) => void;
+};
+
+const CalendarDay = ({ date, onDayClick }: PropsType) => {
   const isCurrentDay = isToday(date);
 
   return (
-    <div className="border-b border-r p-2 h-24 text-right bg-white">
+    <div
+      onClick={() => onDayClick(date)}
+      className="border-b border-r p-2 h-24 text-right bg-white"
+    >
       <span
         className={`
           inline-flex items-center justify-center w-8 h-8 

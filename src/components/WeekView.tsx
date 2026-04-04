@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import CalendarDay from './CalendarDay';
 
 type PropsType = {
@@ -6,6 +8,10 @@ type PropsType = {
 };
 
 export const WeekView = ({ weekDays }: PropsType) => {
+  const [isModal, setIsModal] = useState(false);
+
+  console.log(isModal);
+
   return (
     <>
       {weekDays.map((date, dayIndex) => (
