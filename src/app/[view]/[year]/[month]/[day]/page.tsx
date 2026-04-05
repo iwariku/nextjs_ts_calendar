@@ -47,7 +47,7 @@ const CalendarPage = async ({ params }: PageProps) => {
             <MonthView matrix={calendarMatrix} allSchedules={schedules} />
           ) : (
             // calendarMatrix[0]はパスから受け取った日を含む1週間を示す
-            <WeekView weekDays={calendarMatrix[0]} />
+            <WeekView weekDays={calendarMatrix[0]} allSchedules={schedules} />
           )}
         </div>
       </div>
