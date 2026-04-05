@@ -7,13 +7,14 @@ import { Schedule } from '@/lib/db';
 import Form from 'next/form';
 import { format } from 'date-fns';
 import { ScheduleModal } from './ScheduleModal';
+import { CalendarWeek } from './CalendarWeek';
 
 type PropsType = {
-  weekDays: Date[];
+  week: Date[];
   allSchedules: Schedule[];
 };
 
-export const WeekView = ({ weekDays, allSchedules }: PropsType) => {
+export const WeekView = ({ week, allSchedules }: PropsType) => {
   const [isModal, setIsModal] = useState(false);
   const [selectDate, setSelectDate] = useState<Date>();
 
@@ -32,16 +33,11 @@ export const WeekView = ({ weekDays, allSchedules }: PropsType) => {
 
   return (
     <>
-      {weekDays.map((date, dayIndex) => (
-        <React.Fragment key={dayIndex}>
-          <CalendarDay
-            key={dayIndex}
-            date={date}
-            onDayClick={handleSelectDate}
-            allSchedules={allSchedules}
-          />
-        </React.Fragment>
-      ))}
+      <CalendarWeek
+        week={week}
+        allSchedules={allSchedules}
+        onDayClick={handleSelectDate}
+      />
 
       {isModal && (
         <ScheduleModal
