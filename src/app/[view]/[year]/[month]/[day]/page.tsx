@@ -8,6 +8,7 @@ import {
   getNavigationWeek,
   getWeekData,
 } from '@/utils/calendar';
+import { schedules } from '@/lib/db';
 import React from 'react';
 
 type PageProps = {
@@ -43,10 +44,10 @@ const CalendarPage = async ({ params }: PageProps) => {
         {/* 2. カレンダーの日付部分 */}
         <div className="grid grid-cols-7">
           {view === 'month' ? (
-            <MonthView matrix={calendarMatrix} />
+            <MonthView matrix={calendarMatrix} allSchedules={schedules} />
           ) : (
             // calendarMatrix[0]はパスから受け取った日を含む1週間を示す
-            <WeekView weekDays={calendarMatrix[0]} />
+            <WeekView week={calendarMatrix[0]} allSchedules={schedules} />
           )}
         </div>
       </div>

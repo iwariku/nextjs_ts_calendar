@@ -1,21 +1,42 @@
-// components/MonthView.tsx
-import React from 'react';
-import CalendarDay from './CalendarDay';
+'use client';
+
+import { Schedule } from '@/lib/db';
+import { ScheduleModal } from './ScheduleModal';
+import { CalendarWeek } from './CalendarWeek';
+import { useCalendarModal } from '@/hooks/useCalendarModal';
 
 type PropsType = {
   matrix: Date[][];
+  allSchedules: Schedule[];
 };
 
-export const MonthView = ({ matrix }: PropsType) => {
+export const MonthView = ({ matrix, allSchedules }: PropsType) => {
+  const {
+    isModal,
+    setIsModal,
+    selectDate,
+    handleSelectDate,
+    handleFormAction,
+  } = useCalendarModal();
+
   return (
     <>
       {matrix.map((week, weekIndex) => (
-        <React.Fragment key={weekIndex}>
-          {week.map((date, dayIndex) => (
-            <CalendarDay key={dayIndex} date={date} />
-          ))}
-        </React.Fragment>
+        <CalendarWeek
+          key={weekIndex}
+          week={week}
+          allSchedules={allSchedules}
+          onDayClick={handleSelectDate}
+        />
       ))}
+
+      {isModal && (
+        <ScheduleModal
+          selectDate={selectDate}
+          onClose={() => setIsModal(false)}
+          onAction={handleFormAction}
+        />
+      )}
     </>
   );
 };

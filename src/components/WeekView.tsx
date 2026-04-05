@@ -1,18 +1,39 @@
-import React from 'react';
-import CalendarDay from './CalendarDay';
+'use client';
+
+import { Schedule } from '@/lib/db';
+import { ScheduleModal } from './ScheduleModal';
+import { CalendarWeek } from './CalendarWeek';
+import { useCalendarModal } from '@/hooks/useCalendarModal';
 
 type PropsType = {
-  weekDays: Date[];
+  week: Date[];
+  allSchedules: Schedule[];
 };
 
-export const WeekView = ({ weekDays }: PropsType) => {
+export const WeekView = ({ week, allSchedules }: PropsType) => {
+  const {
+    isModal,
+    setIsModal,
+    selectDate,
+    handleSelectDate,
+    handleFormAction,
+  } = useCalendarModal();
+
   return (
     <>
-      {weekDays.map((date, dayIndex) => (
-        <React.Fragment key={dayIndex}>
-          <CalendarDay date={date} />
-        </React.Fragment>
-      ))}
+      <CalendarWeek
+        week={week}
+        allSchedules={allSchedules}
+        onDayClick={handleSelectDate}
+      />
+
+      {isModal && (
+        <ScheduleModal
+          selectDate={selectDate}
+          onClose={() => setIsModal(false)}
+          onAction={handleFormAction}
+        />
+      )}
     </>
   );
 };
