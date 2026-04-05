@@ -1,13 +1,18 @@
+import { Schedule } from '@/lib/db';
 import { format, isToday } from 'date-fns';
 import React from 'react';
 
 type PropsType = {
   date: Date;
+  allSchedules: Schedule[];
   onDayClick: (date: Date) => void;
 };
 
-const CalendarDay = ({ date, onDayClick }: PropsType) => {
+const CalendarDay = ({ date, allSchedules, onDayClick }: PropsType) => {
   const isCurrentDay = isToday(date);
+
+  const dateStr = format(date, 'yyyy/MM/dd');
+  const mySchedules = allSchedules.filter((s) => s.date === dateStr);
 
   return (
     <div
@@ -22,6 +27,9 @@ const CalendarDay = ({ date, onDayClick }: PropsType) => {
       >
         {format(date, 'd')}
       </span>
+      {mySchedules.map((s) => (
+        <div key={s.id}>{s.title}</div>
+      ))}
     </div>
   );
 };
