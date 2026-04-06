@@ -1,7 +1,7 @@
 'use client';
 
 import { Schedule } from '@/lib/db';
-import { ScheduleModal } from './ScheduleModal';
+import { ScheduleModal } from './CreateSchedule';
 import { CalendarWeek } from './CalendarWeek';
 import { useCalendarModal } from '@/hooks/useCalendarModal';
 import { UpdateSchedule } from './UpdateSchedule';

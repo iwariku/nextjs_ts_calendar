@@ -42,6 +42,7 @@ const CalendarDay = ({
               e.stopPropagation();
               onSelectSchedule(schedule);
             }}
+            className="w-full text-center px-2 py-0.5 mb-1 bg-blue-100 text-blue-700  rounded hover:bg-blue-200 transition-colors truncate "
           >
             {schedule.title}
           </button>
