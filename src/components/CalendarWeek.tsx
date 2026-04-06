@@ -6,9 +6,15 @@ type PropsType = {
   week: Date[];
   allSchedules: Schedule[];
   onDayClick: (date: Date) => void;
+  onSelectSchedule: (schedule: Schedule) => void;
 };
 
-export const CalendarWeek = ({ week, allSchedules, onDayClick }: PropsType) => {
+export const CalendarWeek = ({
+  week,
+  allSchedules,
+  onDayClick,
+  onSelectSchedule,
+}: PropsType) => {
   return (
     <div className="contents">
       {week.map((date, dayIndex) => (
@@ -17,6 +23,7 @@ export const CalendarWeek = ({ week, allSchedules, onDayClick }: PropsType) => {
           date={date}
           onDayClick={onDayClick}
           allSchedules={allSchedules}
+          onSelectSchedule={onSelectSchedule}
         />
       ))}
     </div>

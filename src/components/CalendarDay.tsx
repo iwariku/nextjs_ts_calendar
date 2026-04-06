@@ -6,13 +6,19 @@ type PropsType = {
   date: Date;
   allSchedules: Schedule[];
   onDayClick: (date: Date) => void;
+  onSelectSchedule: (schedule: Schedule) => void;
 };
 
-const CalendarDay = ({ date, allSchedules, onDayClick }: PropsType) => {
+const CalendarDay = ({
+  date,
+  allSchedules,
+  onDayClick,
+  onSelectSchedule,
+}: PropsType) => {
   const isCurrentDay = isToday(date);
 
   const dateStr = format(date, 'yyyy/MM/dd');
-  const mySchedules = allSchedules.filter((s) => s.date === dateStr);
+  const Schedules = allSchedules.filter((s) => s.date === dateStr);
 
   return (
     <div
@@ -27,9 +33,20 @@ const CalendarDay = ({ date, allSchedules, onDayClick }: PropsType) => {
       >
         {format(date, 'd')}
       </span>
-      {mySchedules.map((s) => (
-        <div key={s.id}>{s.title}</div>
-      ))}
+
+      <div className="mt-1">
+        {Schedules.map((schedule) => (
+          <button
+            key={schedule.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              onSelectSchedule(schedule);
+            }}
+          >
+            {schedule.title}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
