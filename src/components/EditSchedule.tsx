@@ -7,7 +7,7 @@ type PropsType = {
   selectDate: Date | undefined;
   selectSchedule: Schedule;
   onClose: () => void;
-  onAction: (formData: FormData) => Promise<void>;
+  onUpdate: (formData: FormData) => Promise<void>;
   onDelete: (formData: FormData) => Promise<void>;
 };
 
@@ -15,7 +15,7 @@ export const EditSchedule = ({
   selectDate,
   selectSchedule,
   onClose,
-  onAction,
+  onUpdate,
   onDelete,
 }: PropsType) => {
   return (
@@ -56,7 +56,7 @@ export const EditSchedule = ({
 
         <h2 className="text-xl font-bold mb-6 text-gray-700">予定を修正</h2>
 
-        <Form action={onAction} className="flex flex-col gap-6">
+        <Form action={onUpdate} className="flex flex-col gap-6">
           <input type="hidden" name="id" value={selectSchedule?.id} />
 
           <input
