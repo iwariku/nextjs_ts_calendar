@@ -18,7 +18,7 @@ const CalendarDay = ({
   const isCurrentDay = isToday(date);
 
   const dateStr = format(date, 'yyyy/MM/dd');
-  const Schedules = allSchedules.filter((s) => s.date === dateStr);
+  const schedules = allSchedules.filter((s) => s.date === dateStr);
 
   return (
     <div
@@ -35,7 +35,7 @@ const CalendarDay = ({
       </span>
 
       <div className="mt-1">
-        {Schedules.map((schedule) => (
+        {schedules.map((schedule) => (
           <button
             key={schedule.id}
             onClick={(e) => {
