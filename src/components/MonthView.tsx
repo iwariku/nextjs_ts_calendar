@@ -17,7 +17,7 @@ export const MonthView = ({ matrix, allSchedules }: PropsType) => {
     setIsModal,
     selectDate,
     selectSchedule,
-    setSelectSchedule,
+    closeEditModal,
     handleSelectSchedule,
     handleSelectDate,
     handleCreate,
@@ -44,10 +44,7 @@ export const MonthView = ({ matrix, allSchedules }: PropsType) => {
             <EditSchedule
               selectDate={selectDate}
               selectSchedule={selectSchedule}
-              onClose={() => {
-                setIsModal(false);
-                setSelectSchedule(undefined); // 閉じる時にリセット
-              }}
+              onClose={closeEditModal}
               onUpdate={handleUpdate}
               onDelete={handleDelete}
             />
