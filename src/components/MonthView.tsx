@@ -4,7 +4,7 @@ import { Schedule } from '@/lib/db';
 import { ScheduleModal } from './CreateSchedule';
 import { CalendarWeek } from './CalendarWeek';
 import { useCalendarModal } from '@/hooks/useCalendarModal';
-import { UpdateSchedule } from './UpdateSchedule';
+import { EditSchedule } from './EditSchedule';
 
 type PropsType = {
   matrix: Date[][];
@@ -40,7 +40,7 @@ export const MonthView = ({ matrix, allSchedules }: PropsType) => {
         <>
           {selectSchedule ? (
             // 編集モード：selectSchedule があるとき
-            <UpdateSchedule
+            <EditSchedule
               selectDate={selectDate}
               selectSchedule={selectSchedule}
               onClose={() => {

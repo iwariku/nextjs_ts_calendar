@@ -11,7 +11,7 @@ type PropsType = {
   onDelete: (formData: FormData) => Promise<void>;
 };
 
-export const UpdateSchedule = ({
+export const EditSchedule = ({
   selectDate,
   selectSchedule,
   onClose,
