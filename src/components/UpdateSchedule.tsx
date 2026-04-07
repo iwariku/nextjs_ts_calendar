@@ -8,6 +8,7 @@ type PropsType = {
   selectSchedule: Schedule;
   onClose: () => void;
   onAction: (formData: FormData) => Promise<void>;
+  onDelete: (formData: FormData) => Promise<void>;
 };
 
 export const UpdateSchedule = ({
@@ -15,6 +16,7 @@ export const UpdateSchedule = ({
   selectSchedule,
   onClose,
   onAction,
+  onDelete,
 }: PropsType) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -40,6 +42,17 @@ export const UpdateSchedule = ({
         </button>
 
         <h2 className="text-xl font-bold mb-6 text-gray-700">予定を修正</h2>
+
+        <Form action={onDelete} className="mb-4 text-right">
+          <input type="hidden" name="id" value={selectSchedule?.id} />
+          <button
+            type="submit"
+            className="text-red-600 hover:underline text-sm"
+            onClick={(e) => !confirm('削除しますか？') && e.preventDefault()}
+          >
+            削除
+          </button>
+        </Form>
 
         <Form action={onAction} className="flex flex-col gap-6">
           <input type="hidden" name="id" value={selectSchedule?.id} />

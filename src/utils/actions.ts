@@ -43,3 +43,19 @@ export const updateSchedule = async (formData: FormData) => {
 
   revalidatePath('/');
 };
+
+export const deleteSchedule = async (formData: FormData) => {
+  const id = formData.get('id');
+
+  if (typeof id !== 'string') {
+    return;
+  }
+
+  const index = schedules.findIndex((s) => s.id === id);
+
+  if (index !== -1) {
+    schedules.splice(index, 1);
+  }
+
+  revalidatePath('/');
+};

@@ -21,6 +21,7 @@ export const MonthView = ({ matrix, allSchedules }: PropsType) => {
     handleSelectSchedule,
     handleSelectDate,
     handleFormAction,
+    handleDeleteAction,
   } = useCalendarModal();
 
   return (
@@ -47,6 +48,7 @@ export const MonthView = ({ matrix, allSchedules }: PropsType) => {
                 setSelectSchedule(undefined); // 閉じる時にリセット
               }}
               onAction={handleFormAction}
+              onDelete={handleDeleteAction}
             />
           ) : (
             // 新規作成モード：selectSchedule が無いとき

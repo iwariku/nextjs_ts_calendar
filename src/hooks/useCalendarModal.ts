@@ -1,5 +1,9 @@
 import { Schedule } from '@/lib/db';
-import { createSchedule, updateSchedule } from '@/utils/actions';
+import {
+  createSchedule,
+  deleteSchedule,
+  updateSchedule,
+} from '@/utils/actions';
 import { useState } from 'react';
 
 export const useCalendarModal = () => {
@@ -17,6 +21,12 @@ export const useCalendarModal = () => {
     setIsModal(true);
     setSelectSchedule(schedule);
     setSelectDate(new Date(schedule.date));
+  };
+
+  const handleDeleteAction = async (formData: FormData) => {
+    await deleteSchedule(formData);
+    setIsModal(false);
+    setSelectSchedule(undefined);
   };
 
   const handleFormAction = async (formData: FormData) => {
@@ -38,5 +48,6 @@ export const useCalendarModal = () => {
     handleSelectSchedule,
     handleSelectDate,
     handleFormAction,
+    handleDeleteAction,
   };
 };
