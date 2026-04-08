@@ -4,7 +4,7 @@ import { Schedule } from '@/lib/db';
 import { ScheduleModal } from './CreateSchedule';
 import { CalendarWeek } from './CalendarWeek';
 import { useCalendarModal } from '@/hooks/useCalendarModal';
-import { UpdateSchedule } from './UpdateSchedule';
+import { EditSchedule } from './EditSchedule';
 
 type PropsType = {
   week: Date[];
@@ -21,6 +21,7 @@ export const WeekView = ({ week, allSchedules }: PropsType) => {
     handleSelectSchedule,
     handleSelectDate,
     handleFormAction,
+    handleDeleteAction,
   } = useCalendarModal();
 
   return (
@@ -36,7 +37,7 @@ export const WeekView = ({ week, allSchedules }: PropsType) => {
         <>
           {selectSchedule ? (
             // 編集モード：selectSchedule があるとき
-            <UpdateSchedule
+            <EditSchedule
               selectDate={selectDate}
               selectSchedule={selectSchedule}
               onClose={() => {
@@ -44,6 +45,7 @@ export const WeekView = ({ week, allSchedules }: PropsType) => {
                 setSelectSchedule(undefined); // 閉じる時にリセット
               }}
               onAction={handleFormAction}
+              onDelete={handleDeleteAction}
             />
           ) : (
             // 新規作成モード：selectSchedule が無いとき
