@@ -11,6 +11,11 @@ export const useCalendarModal = () => {
   const [selectDate, setSelectDate] = useState<Date>();
   const [selectSchedule, setSelectSchedule] = useState<Schedule>();
 
+  const closeEditModal = () => {
+    setIsModal(false);
+    setSelectSchedule(undefined);
+  };
+
   const handleSelectDate = (selectDate: Date) => {
     setIsModal(true);
     setSelectDate(selectDate);
@@ -23,20 +28,19 @@ export const useCalendarModal = () => {
     setSelectDate(new Date(schedule.date));
   };
 
-  const handleDeleteAction = async (formData: FormData) => {
-    await deleteSchedule(formData);
+  const handleCreate = async (formData: FormData) => {
+    await createSchedule(formData);
     setIsModal(false);
-    setSelectSchedule(undefined);
   };
 
-  const handleFormAction = async (formData: FormData) => {
-    if (selectSchedule) {
-      await updateSchedule(formData);
-    } else {
-      await createSchedule(formData);
-    }
-    setIsModal(false);
-    setSelectSchedule(undefined); // リセット
+  const handleUpdate = async (formData: FormData) => {
+    await updateSchedule(formData);
+    closeEditModal();
+  };
+
+  const handleDelete = async (formData: FormData) => {
+    await deleteSchedule(formData);
+    closeEditModal();
   };
 
   return {
@@ -44,10 +48,11 @@ export const useCalendarModal = () => {
     setIsModal,
     selectDate,
     selectSchedule,
-    setSelectSchedule,
+    closeEditModal,
     handleSelectSchedule,
     handleSelectDate,
-    handleFormAction,
-    handleDeleteAction,
+    handleCreate,
+    handleUpdate,
+    handleDelete,
   };
 };

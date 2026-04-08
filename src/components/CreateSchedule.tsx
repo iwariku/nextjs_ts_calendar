@@ -5,10 +5,10 @@ import Form from 'next/form';
 type PropsType = {
   selectDate: Date | undefined;
   onClose: () => void;
-  onAction: (formData: FormData) => Promise<void>;
+  onCreate: (formData: FormData) => Promise<void>;
 };
 
-export const ScheduleModal = ({ selectDate, onClose, onAction }: PropsType) => {
+export const ScheduleModal = ({ selectDate, onClose, onCreate }: PropsType) => {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-[448px] relative text-gray-900">
@@ -34,7 +34,7 @@ export const ScheduleModal = ({ selectDate, onClose, onAction }: PropsType) => {
 
         <h2 className="text-xl font-bold mb-6 text-gray-700">予定を作成</h2>
 
-        <Form action={onAction} className="flex flex-col gap-6">
+        <Form action={onCreate} className="flex flex-col gap-6">
           <input
             type="text"
             name="title"
